@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Obra — Carolina Pastoriza Hausmann</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23F5F1E7'/%3E%3Ctext x='16' y='23' font-family='Georgia' font-size='19' fill='%23B98A2F' text-anchor='middle'%3EC%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="./">Carolina Pastoriza Hausmann</a>
+  <nav class="menu">
+    <a href="./">Home</a>
+    <a href="obra">Obra</a>
+    <a href="carolina">Carolina</a>
+    <a href="contacto">Contacto</a>
+  </nav>
+</header>
+<main class="ficha" id="ficha"></main>
+<footer class="pie">
+  <span id="pieNombre">© 2026 Carolina Pastoriza Hausmann</span>
+</footer>
+<script src="data/seed.js"></script>
+<script src="js/base.js"></script>
+<script>
+const ID = new URLSearchParams(location.search).get('id') || '';
+function pintar (d) {
+  const o = d.obras.find(x => x.id === ID);
+  if (!o) { document.getElementById('ficha').innerHTML = '<p style="padding:40px 0">Obra no encontrada. <a class="volver" href="obra">← Volver a Obra</a></p>'; return; }
+  document.title = o.titulo + ' — ' + (d.textos.nombre || 'Carolina Pastoriza Hausmann');
+  const lineas = [o.tecnica, o.soporte, o.medidas, o.ubicacion, o.anio].filter(Boolean);
+  document.getElementById('ficha').innerHTML = `
+    <div class="ficha-img"><img src="${esc(o.img)}" alt="${esc(o.titulo)}"></div>
+    <div class="ficha-info">
+      <h1>${esc(o.titulo)}</h1>
+      <div class="sub"></div>
+      <div class="ficha-meta">${lineas.map(esc).join('<br>')}</div>
+      ${o.descripcion ? '<p class="ficha-desc">' + esc(o.descripcion) + '</p>' : ''}
+      <a class="volver" href="${esc(o.serie)}">← Volver a ${serieNombre(o.serie)}</a>
+    </div>`;
+  document.getElementById('pieNombre').textContent = '© ' + new Date().getFullYear() + ' ' + (d.textos.nombre || 'Carolina Pastoriza Hausmann');
+}
+pintar(CARO.local);
+CARO.promesa.then(pintar);
+</script>
+</body>
+</html>

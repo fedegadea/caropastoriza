@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Admin — Carolina Pastoriza Hausmann</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23F5F1E7'/%3E%3Ctext x='16' y='23' font-family='Georgia' font-size='19' fill='%23B98A2F' text-anchor='middle'%3EC%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/estilo.css">
+<style>
+.adm{max-width:1080px;margin:0 auto;padding:30px clamp(18px,4vw,50px) 90px}
+.adm h1{font:500 30px/1.2 var(--display);letter-spacing:.12em;margin:8px 0 4px}
+.adm .nota{color:var(--tinta2);font-size:14.5px;margin-bottom:22px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0}
+.tabs button{font:500 13px/1 var(--serif);letter-spacing:.13em;text-transform:uppercase;background:transparent;border:1px solid var(--linea);color:var(--tinta2);padding:11px 18px;cursor:pointer}
+.tabs button.on{border-color:var(--oro);color:var(--oro)}
+.card{background:#fff;border:1px solid var(--linea);padding:16px;margin-bottom:14px;display:grid;grid-template-columns:92px 1fr;gap:16px}
+.card img{width:92px;height:92px;object-fit:cover;box-shadow:0 1px 8px rgba(60,45,20,.18)}
+.campos{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:9px}
+.campos label{display:block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--tinta2);margin-bottom:3px}
+.inp{width:100%;font:400 15px/1.4 var(--serif);color:var(--tinta);background:var(--crema);border:1px solid var(--linea);padding:8px 10px}
+.inp:focus{outline:none;border-color:var(--oro)}
+textarea.inp{resize:vertical}
+.fila-acciones{grid-column:1/-1;display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:2px}
+.mini{font:500 12px/1 var(--serif);letter-spacing:.08em;background:transparent;border:1px solid var(--linea);color:var(--tinta2);padding:8px 12px;cursor:pointer}
+.mini:hover{border-color:var(--oro);color:var(--oro)}
+.mini.rojo:hover{border-color:#B3452E;color:#B3452E}
+.btn-oro{font:500 14px/1 var(--serif);letter-spacing:.2em;text-transform:uppercase;background:var(--oro);border:none;color:#fff;padding:15px 30px;cursor:pointer}
+.btn-oro:disabled{opacity:.6}
+.barra-guardar{position:fixed;left:0;right:0;bottom:0;background:rgba(245,241,231,.96);border-top:1px solid var(--linea);padding:12px clamp(18px,4vw,50px);display:flex;gap:14px;align-items:center;z-index:50}
+.chip-ok{color:#3F7A44;font-size:14px}
+.msg{background:#fff;border:1px solid var(--linea);padding:14px 16px;margin-bottom:10px}
+.msg b{font-size:15px}
+.msg .cu{color:var(--tinta2);font-size:12.5px;margin-bottom:6px}
+.tx-grid{display:grid;gap:14px;max-width:720px}
+.oculta-si{opacity:.45}
+@media(max-width:620px){.card{grid-template-columns:1fr}.card img{width:120px;height:120px}}
+</style>
+</head>
+<body>
+<div class="adm">
+  <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap">
+    <div>
+      <h1>PANEL DE OBRAS</h1>
+      <div class="nota">Editá las obras y los textos del sitio — los cambios se ven al instante en caropastoriza. <a href="./" target="_blank" style="color:var(--oro)">Ver el sitio ↗</a></div>
+    </div>
+    <button class="mini" onclick="salir()" id="btnSalir" hidden>Salir</button>
+  </div>
+  <div id="cuerpo"></div>
+</div>
+<div class="barra-guardar" id="barra" hidden>
+  <button class="btn-oro" id="btnGuardar" onclick="guardar()">Guardar cambios</button>
+  <span class="chip-ok" id="chipOk"></span>
+</div>
+<script src="data/seed.js"></script>
+<script src="js/base.js"></script>
+<script>
+let KEY = localStorage.getItem('caro_key') || '';
+let D = null, TAB = 'oleo', SUCIO = false;
+const $ = s => document.querySelector(s);
+const SERIES = [['oleo','Óleo'],['grabado','Grabado'],['digital','Digital']];
+
+function login (msg) {
+  $('#cuerpo').innerHTML = `<div class="card" style="grid-template-columns:1fr;max-width:420px">
+    <div><label style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--tinta2)">Clave del panel</label>
+    <div style="display:flex;gap:8px;margin-top:6px"><input class="inp" id="k" type="password" style="flex:1">
+    <button class="btn-oro" style="padding:12px 20px" onclick="entrar()">Entrar</button></div>
+    ${msg ? '<div style="color:#B3452E;font-size:13.5px;margin-top:8px">' + esc(msg) + '</div>' : ''}</div></div>`;
+  const k = $('#k'); k.focus(); k.onkeydown = e => { if (e.key === 'Enter') entrar(); };
+}
+async function entrar () { KEY = $('#k').value.trim(); localStorage.setItem('caro_key', KEY); cargar(); }
+function salir () { localStorage.removeItem('caro_key'); KEY = ''; location.reload(); }
+
+async function cargar () {
+  if (!KEY) return login();
+  $('#cuerpo').innerHTML = '<div class="nota">Cargando…</div>';
+  try {
+    const r = await fetch(CARO_API + '/data', { cache: 'no-store', headers: { 'x-caro-key': KEY } });
+    const d = await r.json();
+    if (!d.admin) { localStorage.removeItem('caro_key'); return login('Clave incorrecta'); }
+    D = {
+      obras: (Array.isArray(d.obras) && d.obras.length) ? d.obras : JSON.parse(JSON.stringify(SEED.obras)),
+      textos: Object.assign({}, SEED.textos, d.textos || {}),
+      mensajes: d.mensajes || []
+    };
+    $('#btnSalir').hidden = false; $('#barra').hidden = false;
+    render();
+  } catch (e) { $('#cuerpo').innerHTML = '<div class="nota">No se pudo cargar: ' + esc(e.message) + '</div>'; }
+}
+
+function marcar () { SUCIO = true; $('#chipOk').textContent = 'Cambios sin guardar'; $('#chipOk').style.color = '#9A6B12'; }
+
+function render () {
+  const tabs = SERIES.map(([k, l]) => `<button class="${TAB === k ? 'on' : ''}" onclick="TAB='${k}';render()">${l} (${D.obras.filter(o => o.serie === k).length})</button>`).join('')
+    + `<button class="${TAB === 'textos' ? 'on' : ''}" onclick="TAB='textos';render()">Textos</button>`
+    + `<button class="${TAB === 'mensajes' ? 'on' : ''}" onclick="TAB='mensajes';render()">Mensajes (${D.mensajes.length})</button>`;
+  let cuerpo = '';
+  if (TAB === 'textos') cuerpo = vTextos();
+  else if (TAB === 'mensajes') cuerpo = vMensajes();
+  else cuerpo = vObras(TAB);
+  $('#cuerpo').innerHTML = `<div class="tabs">${tabs}</div>` + cuerpo;
+}
+
+function vObras (serie) {
+  const obras = D.obras.filter(o => o.serie === serie);
+  return obras.map(o => {
+    const i = D.obras.indexOf(o);
+    return `<div class="card ${o.oculta ? 'oculta-si' : ''}">
+      <img src="${esc(o.img)}" alt="">
+      <div>
+        <div class="campos">
+          <div style="grid-column:1/-1"><label>Título</label><input class="inp" value="${esc(o.titulo)}" oninput="D.obras[${i}].titulo=this.value;marcar()"></div>
+          <div><label>Técnica</label><input class="inp" value="${esc(o.tecnica || '')}" oninput="D.obras[${i}].tecnica=this.value;marcar()"></div>
+          <div><label>Soporte</label><input class="inp" value="${esc(o.soporte || '')}" oninput="D.obras[${i}].soporte=this.value;marcar()"></div>
+          <div><label>Medidas</label><input class="inp" value="${esc(o.medidas || '')}" oninput="D.obras[${i}].medidas=this.value;marcar()"></div>
+          <div><label>Ubicación</label><input class="inp" value="${esc(o.ubicacion || '')}" oninput="D.obras[${i}].ubicacion=this.value;marcar()"></div>
+          <div><label>Año</label><input class="inp" value="${esc(o.anio || '')}" oninput="D.obras[${i}].anio=this.value;marcar()"></div>
+          <div style="grid-column:1/-1"><label>Descripción (opcional, se ve en la ficha)</label><textarea class="inp" rows="2" oninput="D.obras[${i}].descripcion=this.value;marcar()">${esc(o.descripcion || '')}</textarea></div>
+        </div>
+        <div class="fila-acciones">
+          <button class="mini" onclick="mover(${i},-1)">↑ Subir</button>
+          <button class="mini" onclick="mover(${i},1)">↓ Bajar</button>
+          <button class="mini" onclick="D.obras[${i}].oculta=!D.obras[${i}].oculta;marcar();render()">${o.oculta ? '👁 Mostrar' : '🙈 Ocultar'}</button>
+          <label class="mini" style="cursor:pointer">📷 Cambiar foto<input type="file" accept="image/*" hidden onchange="subirFoto(this,${i})"></label>
+          <button class="mini rojo" onclick="borrar(${i})">Eliminar</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('') + `
+  <div class="card" style="grid-template-columns:1fr">
+    <div class="fila-acciones" style="margin:0">
+      <label class="mini" style="cursor:pointer;border-color:var(--oro);color:var(--oro)">＋ Agregar obra a ${serieNombre(serie)} (elegí la foto)
+        <input type="file" accept="image/*" hidden onchange="nuevaObra(this,'${serie}')"></label>
+      <span class="nota" style="margin:0">La foto se sube sola; después completá los datos y Guardar.</span>
+    </div>
+  </div>`;
+}
+
+function mover (i, dir) {
+  const o = D.obras[i];
+  const hermanos = D.obras.filter(x => x.serie === o.serie);
+  const pos = hermanos.indexOf(o);
+  const dest = hermanos[pos + dir];
+  if (!dest) return;
+  const j = D.obras.indexOf(dest);
+  D.obras[i] = dest; D.obras[j] = o;
+  marcar(); render();
+}
+function borrar (i) {
+  if (!confirm('¿Eliminar "' + D.obras[i].titulo + '" del sitio? (la foto original queda en tu Drive)')) return;
+  D.obras.splice(i, 1); marcar(); render();
+}
+async function subirArchivo (file) {
+  const r = await fetch(CARO_API + '/upload-url', { method: 'POST', headers: { 'Content-Type': 'application/json', 'x-caro-key': KEY }, body: JSON.stringify({ nombre: file.name, bytes: file.size }) });
+  const d = await r.json();
+  if (d.error) throw new Error(d.error);
+  const up = await fetch(d.uploadUrl, { method: 'PUT', headers: { 'Content-Type': file.type || 'image/jpeg' }, body: file });
+  if (!up.ok) throw new Error('Falló la subida de la foto');
+  return d.publicUrl;
+}
+async function subirFoto (inp, i) {
+  const f = inp.files[0]; if (!f) return;
+  try { D.obras[i].img = await subirArchivo(f); marcar(); render(); }
+  catch (e) { alert(e.message); }
+}
+async function nuevaObra (inp, serie) {
+  const f = inp.files[0]; if (!f) return;
+  try {
+    const url = await subirArchivo(f);
+    D.obras.push({ id: 'ob_' + Date.now().toString(36), serie, titulo: 'NUEVA OBRA', tecnica: serie === 'oleo' ? 'Óleo' : serie === 'grabado' ? 'Grabado' : 'Arte digital', soporte: serie === 'oleo' ? 'Tela' : '', medidas: '', ubicacion: serie === 'digital' ? '' : 'Buenos Aires', anio: String(new Date().getFullYear()), descripcion: '', img: url });
+    marcar(); render(); window.scrollTo(0, document.body.scrollHeight);
+  } catch (e) { alert(e.message); }
+}
+
+function vTextos () {
+  const t = D.textos;
+  const campo = (k, l, rows) => `<div><label style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--tinta2)">${l}</label>` +
+    (rows ? `<textarea class="inp" rows="${rows}" oninput="D.textos['${k}']=this.value;marcar()">${esc(t[k] || '')}</textarea>`
+          : `<input class="inp" value="${esc(t[k] || '')}" oninput="D.textos['${k}']=this.value;marcar()">`) + '</div>';
+  return `<div class="tx-grid">
+    ${campo('nombre', 'Nombre (logo y home)')}
+    ${campo('email', 'Email de contacto (recibe los mensajes del formulario)')}
+    ${campo('instagram', 'Instagram (sin @)')}
+    <div style="border-top:1px solid var(--linea);padding-top:14px;font:500 13px/1 var(--serif);letter-spacing:.14em;color:var(--tinta2)">PÁGINA CAROLINA</div>
+    ${campo('caroSub', 'Subtítulo (PINTURA · GRABADO · ARTE DIGITAL)')}
+    ${campo('caroIntro', 'Texto principal', 4)}
+    ${campo('b1t', 'Bloque 1 — título')} ${campo('b1', 'Bloque 1 — texto', 3)}
+    ${campo('b2t', 'Bloque 2 — título')} ${campo('b2', 'Bloque 2 — texto', 3)}
+    ${campo('b3t', 'Bloque 3 — título')} ${campo('b3', 'Bloque 3 — texto', 3)}
+    ${campo('b4t', 'Bloque 4 — título')} ${campo('b4', 'Bloque 4 — texto', 3)}
+  </div>`;
+}
+
+function vMensajes () {
+  if (!D.mensajes.length) return '<div class="nota">Todavía no llegaron mensajes desde el formulario de contacto.</div>';
+  return D.mensajes.map(m => `<div class="msg">
+    <div class="cu">${new Date(m.t).toLocaleString('es-AR', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</div>
+    <b>${esc(m.nombre)}</b> ${m.email ? '· <a href="mailto:' + esc(m.email) + '" style="color:var(--oro)">' + esc(m.email) + '</a>' : ''}
+    <div style="white-space:pre-wrap;margin-top:6px">${esc(m.mensaje)}</div>
+  </div>`).join('');
+}
+
+async function guardar () {
+  const btn = $('#btnGuardar'); btn.disabled = true; btn.textContent = 'Guardando…';
+  try {
+    const r = await fetch(CARO_API + '/guardar', { method: 'POST', headers: { 'Content-Type': 'application/json', 'x-caro-key': KEY }, body: JSON.stringify({ obras: D.obras, textos: D.textos }) });
+    const d = await r.json();
+    if (d.error) throw new Error(d.error);
+    SUCIO = false;
+    $('#chipOk').textContent = 'Guardado ✓ — ya está en el sitio'; $('#chipOk').style.color = '#3F7A44';
+  } catch (e) { $('#chipOk').textContent = 'Error: ' + e.message; $('#chipOk').style.color = '#B3452E'; }
+  btn.disabled = false; btn.textContent = 'Guardar cambios';
+}
+window.addEventListener('beforeunload', e => { if (SUCIO) { e.preventDefault(); e.returnValue = ''; } });
+cargar();
+</script>
+</body>
+</html>

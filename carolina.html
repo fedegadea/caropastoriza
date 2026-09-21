@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carolina — Carolina Pastoriza Hausmann</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23F5F1E7'/%3E%3Ctext x='16' y='23' font-family='Georgia' font-size='19' fill='%23B98A2F' text-anchor='middle'%3EC%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/estilo.css">
+<style>body{color:#33290F}</style>
+</head>
+<body>
+<div class="caro-fondo"></div>
+<header class="top">
+  <a class="logo" href="./" style="color:#2E230C">Carolina Pastoriza Hausmann</a>
+  <nav class="menu" style="--tinta:#2E230C">
+    <a href="./" style="color:#2E230C">Home</a>
+    <a href="obra" style="color:#2E230C">Obra</a>
+    <a href="contacto" style="color:#2E230C">Contacto</a>
+  </nav>
+</header>
+<main class="caro-wrap">
+  <div class="caro-foto"><img src="assets/carolina.jpg" alt="Carolina Pastoriza Hausmann"></div>
+  <div class="caro-col">
+    <h1>CAROLINA</h1>
+    <div class="sub" id="caroSub">PINTURA · GRABADO · ARTE DIGITAL</div>
+    <p class="intro" id="caroIntro"></p>
+    <div class="caro-bloques" id="bloques"></div>
+  </div>
+</main>
+<script src="data/seed.js"></script>
+<script src="js/base.js"></script>
+<script>
+function pintar (d) {
+  const t = d.textos;
+  document.getElementById('caroSub').textContent = t.caroSub || '';
+  document.getElementById('caroIntro').textContent = t.caroIntro || '';
+  document.getElementById('bloques').innerHTML = [['b1t','b1'],['b2t','b2'],['b3t','b3'],['b4t','b4']]
+    .filter(([tt, bb]) => t[tt] || t[bb])
+    .map(([tt, bb]) => `<div><h3>${esc(t[tt])}</h3><p>${esc(t[bb])}</p></div>`).join('');
+}
+pintar(CARO.local);
+CARO.promesa.then(pintar);
+</script>
+</body>
+</html>

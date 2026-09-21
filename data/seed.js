@@ -1,0 +1,52 @@
+/* Datos semilla del sitio. La versión viva se guarda en la nube (admin);
+   si la nube no responde, el sitio muestra esto. */
+window.SEED = {
+  textos: {
+    nombre: "Carolina Pastoriza Hausmann",
+    instagram: "carolinapastoriza",
+    email: "carolina.pastoriza@gmail.com",
+    caroSub: "PINTURA · GRABADO · ARTE DIGITAL",
+    caroIntro: "La naturaleza, la memoria y la belleza de lo cotidiano son el hilo conductor de mi obra. A través de la pintura, el grabado y el arte digital, busco capturar lo esencial, crear imágenes que perduren y generen un diálogo entre tradición y contemporaneidad.",
+    b1t: "FORMACIÓN Y TRAYECTORIA",
+    b1: "Estudié arte en Buenos Aires y en el exterior. A lo largo de los años incorporé distintas técnicas y lenguajes, que hoy conviven en mi práctica artística.",
+    b2t: "SU OBRA",
+    b2: "Mi trabajo explora la relación entre la naturaleza, el territorio y la experiencia humana, con una mirada poética y contemporánea.",
+    b3t: "EXPERIENCIA Y COMPROMISO",
+    b3: "Además de mi producción artística, desarrollo proyectos vinculados a la difusión del arte y la educación, convencida de su valor transformador.",
+    b4t: "EXPOSICIONES",
+    b4: "He participado en muestras individuales y colectivas en Argentina y en el exterior. Mi obra forma parte de colecciones privadas."
+  },
+  obras: [
+    { id: "palace-of-mirrors-i", serie: "oleo", titulo: "PALACE OF MIRRORS I", tecnica: "Óleo", soporte: "Tela", medidas: "70 × 100 cm", ubicacion: "Buenos Aires", anio: "2025", descripcion: "", img: "assets/obras/palace-of-mirrors-i.jpg" },
+    { id: "palace-of-mirrors-ii", serie: "oleo", titulo: "PALACE OF MIRRORS II", tecnica: "Óleo", soporte: "Tela", medidas: "70 × 100 cm", ubicacion: "Buenos Aires", anio: "2025", descripcion: "", img: "assets/obras/palace-of-mirrors-ii.jpg" },
+    { id: "anemonas", serie: "oleo", titulo: "ANEMONAS", tecnica: "Óleo", soporte: "Tela", medidas: "70 × 100 cm", ubicacion: "Buenos Aires", anio: "2025", descripcion: "", img: "assets/obras/anemonas.jpg" },
+    { id: "la-pampa", serie: "oleo", titulo: "LA PAMPA", tecnica: "Óleo", soporte: "Tela", medidas: "70 × 70 cm", ubicacion: "Buenos Aires", anio: "2025", descripcion: "", img: "assets/obras/la-pampa.jpg" },
+    { id: "fortune-calls", serie: "oleo", titulo: "FORTUNE CALLS", tecnica: "Óleo", soporte: "Madera", medidas: "50 × 45 cm", ubicacion: "Buenos Aires", anio: "2025", descripcion: "", img: "assets/obras/fortune-calls.jpg" },
+    { id: "smelling-sweet", serie: "oleo", titulo: "SMELLING SWEET", tecnica: "Óleo", soporte: "Tela", medidas: "62 × 100 cm", ubicacion: "Buenos Aires", anio: "2024", descripcion: "", img: "assets/obras/smelling-sweet.jpg" },
+    { id: "still-mending", serie: "oleo", titulo: "STILL MENDING", tecnica: "Óleo", soporte: "Tela", medidas: "100 × 100 cm", ubicacion: "Buenos Aires", anio: "2024", descripcion: "", img: "assets/obras/still-mending.jpg" },
+    { id: "apollo", serie: "oleo", titulo: "APOLLO", tecnica: "Óleo", soporte: "Tela", medidas: "40 × 40 cm", ubicacion: "Buenos Aires", anio: "2024", descripcion: "", img: "assets/obras/apollo.jpg" },
+    { id: "jupiter", serie: "oleo", titulo: "JUPITER", tecnica: "Óleo", soporte: "Tela", medidas: "30 × 30 cm", ubicacion: "Buenos Aires", anio: "2024", descripcion: "", img: "assets/obras/jupiter.jpg" },
+    { id: "flowers-given-to-you", serie: "oleo", titulo: "FLOWERS GIVEN TO YOU", tecnica: "Óleo", soporte: "Tela", medidas: "80 × 60 cm", ubicacion: "Buenos Aires", anio: "2024", descripcion: "", img: "assets/obras/flowers-given-to-you.jpg" },
+    { id: "peace-will-come", serie: "oleo", titulo: "PEACE WILL COME", tecnica: "Óleo", soporte: "Tela", medidas: "152 × 52 cm", ubicacion: "Buenos Aires", anio: "2024", descripcion: "", img: "assets/obras/peace-will-come.jpg" },
+    { id: "spreading-their-wings", serie: "oleo", titulo: "SPREADING THEIR WINGS", tecnica: "Óleo", soporte: "Tela", medidas: "40 × 40 cm", ubicacion: "Buenos Aires", anio: "2023", descripcion: "", img: "assets/obras/spreading-their-wings.jpg" },
+    { id: "beyond-communication", serie: "oleo", titulo: "BEYOND COMMUNICATION", tecnica: "Óleo", soporte: "Tela", medidas: "65 × 85 cm", ubicacion: "Buenos Aires", anio: "2023", descripcion: "", img: "assets/obras/beyond-communication.jpg" },
+    { id: "united-over-the-field", serie: "oleo", titulo: "UNITED OVER THE FIELD", tecnica: "Óleo", soporte: "Tela", medidas: "65 × 85 cm", ubicacion: "Buenos Aires", anio: "2023", descripcion: "", img: "assets/obras/united-over-the-field.jpg" },
+    { id: "souls-of-previous-times", serie: "oleo", titulo: "SOULS OF PREVIOUS TIMES", tecnica: "Óleo", soporte: "Tela", medidas: "75 × 125 cm", ubicacion: "Buenos Aires", anio: "2022", descripcion: "", img: "assets/obras/souls-of-previous-times.jpg" },
+    { id: "conquistadores", serie: "oleo", titulo: "CONQUISTADORES", tecnica: "Óleo", soporte: "Tela", medidas: "100 × 80 cm", ubicacion: "Buenos Aires", anio: "2026", descripcion: "", img: "assets/obras/conquistadores.jpg" },
+    { id: "flor-de-malena", serie: "oleo", titulo: "FLOR DE MALENA", tecnica: "Óleo", soporte: "Tela", medidas: "50 × 40 cm", ubicacion: "Buenos Aires", anio: "2019", descripcion: "", img: "assets/obras/flor-de-malena.jpg" },
+    { id: "cacti", serie: "grabado", titulo: "Cacti", tecnica: "Fotograbado", soporte: "", medidas: "25 × 16,5 cm", ubicacion: "Tira de 20", anio: "2001", descripcion: "", img: "assets/obras/cacti.jpg" },
+    { id: "fuegia", serie: "grabado", titulo: "Fuegia", tecnica: "Técnica mixta", soporte: "", medidas: "50 × 32 cm", ubicacion: "Tira de 20", anio: "2001", descripcion: "", img: "assets/obras/fuegia.jpg" },
+    { id: "rota", serie: "digital", titulo: "Rota", tecnica: "Arte digital", soporte: "", medidas: "", ubicacion: "", anio: "", descripcion: "", img: "assets/obras/rota.jpg" },
+    { id: "punto-cruz", serie: "digital", titulo: "Punto Cruz", tecnica: "Arte digital", soporte: "", medidas: "", ubicacion: "", anio: "", descripcion: "", img: "assets/obras/punto-cruz.jpg" },
+    { id: "xhosa", serie: "digital", titulo: "Xhosa", tecnica: "Arte digital", soporte: "", medidas: "", ubicacion: "", anio: "", descripcion: "", img: "assets/obras/xhosa.jpg" },
+    { id: "avutarda", serie: "digital", titulo: "Avutarda", tecnica: "Arte digital", soporte: "", medidas: "", ubicacion: "", anio: "", descripcion: "", img: "assets/obras/avutarda.jpg" },
+    { id: "protea", serie: "digital", titulo: "Protea", tecnica: "Arte digital", soporte: "", medidas: "", ubicacion: "", anio: "", descripcion: "", img: "assets/obras/protea.jpg" },
+    { id: "lenga", serie: "digital", titulo: "Lenga", tecnica: "Arte digital", soporte: "", medidas: "", ubicacion: "", anio: "", descripcion: "", img: "assets/obras/lenga.jpg" },
+    { id: "cartas", serie: "digital", titulo: "Cartas", tecnica: "Arte digital", soporte: "", medidas: "", ubicacion: "", anio: "", descripcion: "", img: "assets/obras/cartas.jpg" },
+    { id: "proteas", serie: "digital", titulo: "Proteas", tecnica: "Arte digital", soporte: "", medidas: "", ubicacion: "", anio: "", descripcion: "", img: "assets/obras/proteas.jpg" },
+    { id: "love", serie: "digital", titulo: "Love", tecnica: "Arte digital", soporte: "", medidas: "", ubicacion: "", anio: "", descripcion: "", img: "assets/obras/love.jpg" },
+    { id: "mah-jong", serie: "digital", titulo: "Mah Jong", tecnica: "Arte digital", soporte: "", medidas: "", ubicacion: "", anio: "", descripcion: "", img: "assets/obras/mah-jong.jpg" },
+    { id: "zorrito", serie: "digital", titulo: "Zorrito", tecnica: "Arte digital", soporte: "", medidas: "", ubicacion: "", anio: "", descripcion: "", img: "assets/obras/zorrito.jpg" },
+    { id: "pasionaria", serie: "digital", titulo: "Pasionaria", tecnica: "Arte digital", soporte: "", medidas: "", ubicacion: "", anio: "", descripcion: "", img: "assets/obras/pasionaria.jpg" }
+  ]
+};
