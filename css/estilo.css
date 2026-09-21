@@ -82,16 +82,18 @@ img{display:block;max-width:100%}
 
 /* ── CAROLINA ── */
 .caro-fondo{position:fixed;inset:0;z-index:-2;background:url('../assets/oro.jpg') center/cover}
+/* velo suave: baja el brillo del dorado para que el texto respire */
+.caro-fondo::after{content:'';position:absolute;inset:0;background:rgba(247,240,222,.38)}
 .caro-wrap{max-width:1340px;margin:0 auto;padding:0 clamp(22px,5vw,62px);display:grid;grid-template-columns:minmax(280px,5fr) 7fr;gap:clamp(26px,4.5vw,70px);align-items:end}
 .caro-foto{align-self:end}
 .caro-foto img{width:100%;max-width:520px;box-shadow:0 6px 40px rgba(60,40,0,.35)}
-.caro-col{padding:5vh 0 8vh}
+.caro-col{padding:5vh clamp(18px,2.6vw,40px) 7vh;margin:4vh 0 6vh;background:rgba(248,242,228,.58);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);box-shadow:0 10px 50px rgba(90,60,10,.12)}
 .caro-col h1{font:500 clamp(42px,5.4vw,72px)/1.1 var(--display);letter-spacing:.24em;color:#221A0C}
 .caro-col .sub{font:500 14px/1 var(--serif);letter-spacing:.32em;color:#5A430F;margin:14px 0 30px}
-.caro-col .intro{font-size:18.5px;line-height:1.75;color:#33290F;max-width:52ch}
+.caro-col .intro{font-size:18.5px;line-height:1.75;color:#2A2109;max-width:52ch}
 .caro-bloques{display:grid;grid-template-columns:1fr 1fr;gap:34px clamp(24px,3vw,46px);margin-top:44px}
 .caro-bloques h3{font:600 13.5px/1.3 var(--serif);letter-spacing:.12em;color:#3E2E08}
-.caro-bloques p{font-size:15px;line-height:1.7;color:#4A3A14;margin-top:8px}
+.caro-bloques p{font-size:15px;line-height:1.7;color:#3B2E0F;margin-top:8px}
 
 /* ── CONTACTO ── */
 .cont-wrap{max-width:1340px;margin:0 auto;padding:7vh clamp(22px,5vw,62px) 10vh;max-width:640px;margin-left:clamp(22px,7vw,120px)}
